@@ -16,11 +16,13 @@
       const redirectBase = "http://localhost:3000/auth";
 
       // Redirect with tokens in the query string
-      window.location = `${redirectBase}?${query}`;
+      console.log('Redirecting to:', `${redirectBase}?${query}`);
+      window.location.href = `${redirectBase}?${query}`;
     };
   </script>
 </head>
 <body>
-  <p>Redirecting...</p>
+  <p>Redirecting to your app...</p>
+  <p>If you're not redirected automatically, <a href="#" onclick="window.close()">click here to close this window</a></p>
 </body>
 </html> 
