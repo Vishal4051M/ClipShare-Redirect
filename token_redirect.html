@@ -5,24 +5,56 @@
   <title>Redirecting...</title>
   <script>
     window.onload = function() {
-      // Parse the fragment for tokens
-      const hash = window.location.hash.substring(1); // Remove '#'
-      const params = new URLSearchParams(hash);
+      try {
+        // Parse the fragment for tokens
+        const hash = window.location.hash.substring(1); // Remove '#'
+        console.log('Hash:', hash);
+        
+        const params = new URLSearchParams(hash);
+        console.log('Params:', params.toString());
 
-      // Build a query string from the fragment
-      const query = params.toString();
+        // Build a query string from the fragment
+        const query = params.toString();
 
-      // Your app's localhost redirect - must match callbackUrlScheme in Flutter
-      const redirectBase = "http://localhost:3000/auth";
+        // Your app's localhost redirect - must match callbackUrlScheme in Flutter
+        const redirectBase = "http://localhost:3000/auth";
+        const redirectUrl = `${redirectBase}?${query}`;
 
-      // Redirect with tokens in the query string
-      console.log('Redirecting to:', `${redirectBase}?${query}`);
-      window.location.href = `${redirectBase}?${query}`;
+        console.log('Redirecting to:', redirectUrl);
+        
+        // Try multiple redirect methods
+        setTimeout(() => {
+          window.location.href = redirectUrl;
+        }, 100);
+        
+        // Fallback after 2 seconds
+        setTimeout(() => {
+          if (window.location.href.includes('localhost')) {
+            console.log('Redirect successful');
+          } else {
+            console.log('Redirect failed, trying alternative method');
+            window.location.replace(redirectUrl);
+          }
+        }, 2000);
+        
+      } catch (error) {
+        console.error('Error during redirect:', error);
+        document.getElementById('error').textContent = 'Error: ' + error.message;
+      }
     };
   </script>
 </head>
 <body>
   <p>Redirecting to your app...</p>
+  <p id="error" style="color: red;"></p>
   <p>If you're not redirected automatically, <a href="#" onclick="window.close()">click here to close this window</a></p>
+  <p>Or manually navigate to: <span id="manual-url"></span></p>
+  <script>
+    // Show manual URL for debugging
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const query = params.toString();
+    document.getElementById('manual-url').textContent = `http://localhost:3000/auth?${query}`;
+  </script>
 </body>
 </html> 
