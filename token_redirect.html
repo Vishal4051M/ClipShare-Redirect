@@ -12,8 +12,8 @@
       // Build a query string from the fragment
       const query = params.toString();
 
-      // Your app's custom scheme - must match callbackUrlScheme in Flutter
-      const redirectBase = "clipshare://auth";
+      // Your app's localhost redirect - must match callbackUrlScheme in Flutter
+      const redirectBase = "http://localhost:3000/auth";
 
       // Redirect with tokens in the query string
       window.location = `${redirectBase}?${query}`;
