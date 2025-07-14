@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    window.onload = function() {
+      // Parse the fragment for tokens
+      const hash = window.location.hash.substring(1); // Remove '#'
+      const params = new URLSearchParams(hash);
+
+      // Build a query string from the fragment
+      const query = params.toString();
+
+      // Your app's custom scheme or localhost redirect URI
+      // TODO: Change this to your actual redirect URI if needed
+      const redirectBase = "myapp://auth";
+
+      // Redirect with tokens in the query string
+      window.location = `${redirectBase}?${query}`;
+    };
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html> 
